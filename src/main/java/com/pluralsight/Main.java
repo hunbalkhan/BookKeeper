@@ -2,22 +2,28 @@ package com.pluralsight;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.function.DoubleUnaryOperator;
 
 public class Main {
+    Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
 
+        ArrayList<Transaction> transactions = readTransactions();
 
-        System.out.println("Hello world!");
-
+        System.out.println("Transactions found in file:");
+        for (Transaction t : transactions) {
+            System.out.println(t);
+        }
 
     }
-
 
     // --------- The Home Menu ---------
     public static void homeMenu () {
 
     }
+
 
 
 
@@ -49,12 +55,11 @@ public class Main {
                     transactions.add(new Transaction(date, time, description, vendor, amount));
                 }
             }
-
         }   catch (IOException e) {
             System.out.println("Something went wrong reading the file...");
-        }
-
+        } return transactions;
     }
+// I'm thinking of moving this entire method^^ to a different class maybe names file manager or file reader, that way my main will look much cleaner.
 
 
 
