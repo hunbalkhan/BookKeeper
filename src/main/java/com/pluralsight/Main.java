@@ -1,34 +1,106 @@
 package com.pluralsight;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.function.DoubleUnaryOperator;
 
+
 public class Main {
-    Scanner scanner = new Scanner(System.in);
+
+    public static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        homeMenu(); // Our program starts here immediately calling the home menu first.
+    }
 
-        ArrayList<Transaction> transactions = readTransactions();
 
-        System.out.println("Transactions found in file:");
-        for (Transaction t : transactions) {
-            System.out.println(t);
+    // --------- The Home Menu (Main Loop) ---------
+    public static void homeMenu () {
+        while (true) {
+            System.out.println("\n--------- Welcome to BookKeeper ---------\n");
+            System.out.println("--- The Home Menu ---");
+            System.out.println("D) Add Deposit");
+            System.out.println("P) Make Payment");
+            System.out.println("L) Ledger");
+            System.out.println("X) Exit");
+            System.out.print("Choose an option");
+
+            String choice = ConsoleHelper.promptForString("");
+
+            switch (choice) {
+                case "D":
+                    addDeposit();
+                    break;
+                case "P":
+                    makePayment();
+                    break;
+                case "L":
+                    ledgerScreen();
+                    break;
+                case "X":
+                    System.out.println("""
+                            \n--------- Thank you for using BookKeeper! ---------
+                                                 
+                                              <- Goodbye! ->
+                            """);
+                    return;
+                default:
+                    System.out.println("Invalid option - Please try again.");
+                    break;
+            }
+        }
+    }
+
+
+    public static void addDeposit() {
+        System.out.println("\n--- Add Deposit ---");
+
+        String description = ConsoleHelper.promptForString("Description");
+        String vendor = ConsoleHelper.promptForString("Vendor");
+        double amount = ConsoleHelper.promptForDouble("Amount (numbers only)");
+
+        if (amount <= 0) {
+            System.out.println("\nAmount must be greater than $0.00. Deposit cancelled.");
+            return;
         }
 
+        // Records the current date and time
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+
+        // Formatting date/time fpor consistency of the transactions.csv file.
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        String date = today.format(dateFormatter);
+        String time = now.format(timeFormatter);
+
+        // This builds the csv line so that it can be added to the csv file and read correctly as intended, hopefully this time its working.
+        String line = String.format("%s | %s | %s | %s | %.2f", date, time, description, vendor, amount);
+
+        try {
+            FileWriter fw = new FileWriter("transactions.csv", true);
+            fw.append(line);
+            System.out.println("Deposit added: " + line); // Shows back to the user what they added.
+        } catch (IOException e) {
+            System.out.println("Unable to write to transactions.csv");
+        }
     }
 
-    // --------- The Home Menu ---------
-    public static void homeMenu () {
+    // --------- Make Payment ---------
+    public static void  makePayment () {
+
+}
+
+    // --------- The Ledger Screen ---------
+    public static void ledgerScreen () {
 
     }
-
-
-
-
-
-
 
     // --------- Make CSV File ---------
     // what if I make a transactions class, to assist me in the printing of what a transaction is supposed to look like. First to make it here in Main then to move it to a different class to keep this Main.java clean
@@ -67,12 +139,9 @@ public class Main {
 
 
 
-    // --------- The Ledger Screen ---------
-    public static void ledgerScreen () {
 
-    }
 
-    // --------- The Reports Screen ---------
+    // --------- The Reports Screen --------- (inside the ledger screen)
     public static void reportsScreen () {
 
     }
