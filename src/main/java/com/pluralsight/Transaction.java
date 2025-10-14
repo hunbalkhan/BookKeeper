@@ -1,11 +1,12 @@
 package com.pluralsight;
 
-import java.security.PrivateKey;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Transaction {
     // This class is the template for each transaction recorded
     // Each transaction should include :)
-    public Transaction(String date, String time, String description, String vendor, double amount) {
+    public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount) {
         this.date = date;
         this.time = time;
         this.description = description;
@@ -13,18 +14,18 @@ public class Transaction {
         this.amount = amount;
     }
 
-    private String date;
-    private String time;
+    private LocalDate date;
+    private LocalTime time;
     private String description;
     private String vendor;
     private double amount;
     // I am not sure why these are squiggly yellow lines, but I will move forward and test my code then come back.
 
     // ----- Getters -----
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
-    public String getTime() {
+    public LocalTime getTime() {
         return time;
     }
     public String getDescription() {
@@ -40,8 +41,13 @@ public class Transaction {
     // Should format how to display the transaction into the console.log
     @Override
     public String toString() {
-        return date + " | " + time + " | " + description + " | " + vendor + " | " + amount;
+        //return date + " | " + time + " | " + description + " | " + vendor + " | " + amount;
+        return String.format("%s | %s | %s | %s | $%.2f", date, time, description, vendor, amount);
     }
+
+//    public String toEncodedString(){
+//
+//    }
 
 
 
