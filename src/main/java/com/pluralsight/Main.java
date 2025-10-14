@@ -143,8 +143,9 @@ public class Main {
     public static void displayTransactions(ArrayList<Transaction> transactions) {
         System.out.println("\n--- All Transactions ---\n");
         for (Transaction t : transactions) {
-            System.out.printf("%s | %s | %s | %s | $%.2f\n",
-                    t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+            System.out.println(t);
+//            System.out.printf("%s | %s | %s | %s | $%.2f\n",
+//                    t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
         }
     }
 
@@ -152,8 +153,9 @@ public class Main {
         System.out.println("\n--- All Deposits ---");
         for (Transaction t : transactions) {
             if (t.getAmount() > 0) {
-                System.out.printf("%s | %s | %s | %s | $%.2f%n",
-                        t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+                System.out.println(t);
+//                System.out.printf("%s | %s | %s | %s | $%.2f\n",
+//                        t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
             }
         }
     }
@@ -231,14 +233,20 @@ public class Main {
         System.out.println("\n--- Previous Month Report ---");
 
         LocalDate today = LocalDate.now();
-        int previousMonth = today.getMonthValue() - 1;
+        int prevMonth = today.getMonthValue() - 1; // gets the prev month
         int currentYear = today.getYear();
+
+        // I noticed after a January transaction, this would be a bug and wouldn't print correctly.
+        if (prevMonth == 0) { // 1 - January we get 0
+            prevMonth = 12; // if prev month is 0 then make prevMonth December
+            currentYear -= 1;
+        }
 
         for (Transaction t : transactions) {
             LocalDate date = t.getDate(); // get date of a transaction
 
             // If the transaction happened in the prev month and current year then do the following
-            if (date.getMonthValue() == previousMonth && date.getYear() == currentYear) {
+            if (date.getMonthValue() == prevMonth && date.getYear() == currentYear) {
                 System.out.println(t);
             }
         }
@@ -246,10 +254,22 @@ public class Main {
 
     public static void yearToDate(ArrayList<Transaction> transactions) {
         System.out.println("\n--- Year-to-Date Report ---");
+
+        int currentYear = LocalDate.now().getYear();
+
+        for (Transaction t : transactions) {
+            LocalDate date = t.getDate();
+
+            if (date.getYear() == currentYear) {
+                System.out.println(t);
+            }
+        }
     }
 
     public static void previousYear(ArrayList<Transaction> transactions) {
         System.out.println("\n--- Previous Year Report ---");
+
+
     }
 
     public static void searchByVendor(ArrayList<Transaction> transactions) {
