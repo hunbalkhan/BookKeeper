@@ -214,9 +214,8 @@ public class Main {
     public static void monthToDate(ArrayList<Transaction> transactions) {
         System.out.println("\n--- Month-to-Date Report ---");
 
-        LocalDate today = LocalDate.now();
-        int currentMonth = today.getMonthValue(); // this converts the month into a number.
-        int currentYear = today.getYear(); // gets year
+        int currentMonth = LocalDate.now().getMonthValue(); // this converts the month into a number.
+        int currentYear = LocalDate.now().getYear(); // gets year
 
         //start a for loop to go through each trasaction that is inside the csv file
         for (Transaction t : transactions) {
@@ -232,9 +231,8 @@ public class Main {
     public static void previousMonth(ArrayList<Transaction> transactions) {
         System.out.println("\n--- Previous Month Report ---");
 
-        LocalDate today = LocalDate.now();
-        int prevMonth = today.getMonthValue() - 1; // gets the prev month
-        int currentYear = today.getYear();
+        int prevMonth = LocalDate.now().getMonthValue() - 1; // gets the prev month
+        int currentYear = LocalDate.now().getYear();
 
         // I noticed after a January transaction, this would be a bug and wouldn't print correctly.
         if (prevMonth == 0) { // 1 - January we get 0
@@ -269,11 +267,25 @@ public class Main {
     public static void previousYear(ArrayList<Transaction> transactions) {
         System.out.println("\n--- Previous Year Report ---");
 
+        int prevYear = LocalDate.now().getYear() -1; // gets last year
 
+        for (Transaction t : transactions) {
+            if (t.getDate().getYear() == prevYear) { // print only if transactions match prev year...
+                System.out.println(t);
+            }
+        }
     }
 
     public static void searchByVendor(ArrayList<Transaction> transactions) {
         System.out.println("\n--- Search by Vendor ---");
+
+        String vendorSearch = ConsoleHelper.promptForString("Enter Vendor name to search");
+
+        for (Transaction t : transactions) {
+            if (t.getVendor().equalsIgnoreCase(vendorSearch)) { // loop through all transactions, if it matches regardless of casing then print all matched ones.
+                System.out.println(t);
+            }
+        }
     }
 
 
