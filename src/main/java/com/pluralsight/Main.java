@@ -171,17 +171,95 @@ public class Main {
 
     // --------- The Reports Menu --------- (inside the ledger screen)
     public static void reportsMenu() {
+        ArrayList<Transaction> transactions = readTransactions();
 
+        while (true) {
+            System.out.println("\n--- Reports Menu ---");
+            System.out.println("1) Month-to-Date");
+            System.out.println("2) Previous Month");
+            System.out.println("3) Year-to-Date");
+            System.out.println("4) Previous Year");
+            System.out.println("5) Search by Vendor");
+            System.out.println("0) Back");
+
+            String choice = ConsoleHelper.promptForString("Choose an option");
+
+            switch (choice.trim()) {
+                case "1":
+                    monthToDate(transactions);
+                    break;
+                case "2":
+                    previousMonth(transactions);
+                    break;
+                case "3":
+                    yearToDate(transactions);
+                    break;
+                case "4":
+                    previousYear(transactions);
+                    break;
+                case "5":
+                    searchByVendor(transactions);
+                    break;
+                case "0":
+                   return; // Goes back to Ledger Menu.
+                default:
+                    System.out.println("Invalid choice! Please Please try again.");
+                    break;
+            }
+        }
+    }
+
+    public static void monthToDate(ArrayList<Transaction> transactions) {
+        System.out.println("\n--- Month-to-Date Report ---");
+
+        LocalDate today = LocalDate.now();
+        int currentMonth = today.getMonthValue(); // this converts the month into a number.
+        int currentYear = today.getYear(); // gets year
+
+        //start a for loop to go through each trasaction that is inside the csv file
+        for (Transaction t : transactions) {
+            LocalDate date = t.getDate(); // get date of a transaction
+
+            // If the transaction happened in the current month and year then do the following
+            if (date.getMonthValue() == currentMonth  &&  date.getYear() == currentYear) {
+                System.out.println(t);
+            }
+        }
+    }
+
+    public static void previousMonth(ArrayList<Transaction> transactions) {
+        System.out.println("\n--- Previous Month Report ---");
+
+        LocalDate today = LocalDate.now();
+        int previousMonth = today.getMonthValue() - 1;
+        int currentYear = today.getYear();
+
+        for (Transaction t : transactions) {
+            LocalDate date = t.getDate(); // get date of a transaction
+
+            // If the transaction happened in the prev month and current year then do the following
+            if (date.getMonthValue() == previousMonth && date.getYear() == currentYear) {
+                System.out.println(t);
+            }
+        }
+    }
+
+    public static void yearToDate(ArrayList<Transaction> transactions) {
+        System.out.println("\n--- Year-to-Date Report ---");
+    }
+
+    public static void previousYear(ArrayList<Transaction> transactions) {
+        System.out.println("\n--- Previous Year Report ---");
+    }
+
+    public static void searchByVendor(ArrayList<Transaction> transactions) {
+        System.out.println("\n--- Search by Vendor ---");
     }
 
 
 
 
-
-
-    // what if I make a transactions class, to assist me in the printing of what a transaction is supposed to look like.
     // First to make it here in Main then to move it to a different class to keep this Main.java clean
-    // --------- Main Method for the brains of the transactions, how it can read and write. Taking inspo form SearchInventory project ---------
     public static ArrayList<Transaction> readTransactions() {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
