@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 
 
@@ -17,7 +17,7 @@ public class Main {
 
 
     // --------- The Home Menu (Main Loop) ---------
-    public static void homeMenu () {
+    public static void homeMenu() {
         while (true) {
             System.out.println("\n--------- Welcome to BookKeeper ---------\n");
             System.out.println("\n--- The Home Menu ---");
@@ -54,8 +54,6 @@ public class Main {
     }
 
 
-
-
     public static void addDeposit() {
         System.out.println("\n--- Add Deposit ---");
 
@@ -72,33 +70,16 @@ public class Main {
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
 
-        // Formatting date/time fpor consistency of the transactions.csv file.
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        // I moved my line builder down below
+        Transaction deposit = new Transaction(today, now, description, vendor, amount);
 
-        String date = today.format(dateFormatter);
-        String time = now.format(timeFormatter);
-
-        // This builds the csv line so that it can be added to the csv file and read correctly as intended, hopefully this time its working.
-        String line = String.format("%s | %s | %s | %s | %.2f\n", date, time, description, vendor, amount);
-
-
-        try {
-            FileWriter fw = new FileWriter("transactions.csv", true);
-            fw.append(line);
-            fw.close();
-            System.out.println("Deposit recorded: " + line); // Shows back to the user what they added.
-        } catch (IOException e) {
-            System.out.println("Unable to write to transactions.csv");
-        }
+        saveTransaction(deposit);
+        System.out.println("Deposit Added: " + deposit);
     }
 
 
-
-
-
     // --------- Make Payment --------- I realised I utilized almost the exact same as the Add Deposit and I am thinking further down the line I might simplify this step and add a class to call for repeated steps.
-    public static void  makePayment () {
+    public static void makePayment() {
         System.out.println("\n--- Make Payment ---");
 
         String description = ConsoleHelper.promptForString("Description");
@@ -110,32 +91,15 @@ public class Main {
             return;
         }
 
-        // I needed to convert the positive amount a person types to make a payment as it will make sense to the computer that way and show on the ledger as a proper negative effect on the balance. I found this way to be the easiest.
-        amount = -amount;
-
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
 
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-        String date = today.format(dateFormatter);
-        String time = now.format(timeFormatter);
-
         // This builds the csv line so that it can be added to the csv file and read correctly as intended, hopefully this time its working.
-        String line = String.format("%s | %s | %s | %s | %.2f\n", date, time, description, vendor, amount);
+        Transaction payment = new Transaction(today, now, description, vendor, -amount);
 
-        try {
-            FileWriter fw = new FileWriter("transactions.csv", true);
-            fw.append(line);
-            fw.close();
-            System.out.println("Payment recorded: " + line); // Shows back to the user what they added.
-        } catch (IOException e) {
-            System.out.println("Unable to write to transactions.csv");
-        }
+        saveTransaction(payment);
+        System.out.println("Payment recorded: " + payment);
     }
-
-
 
 
     // --------- The Ledger Menu ---------
@@ -206,9 +170,11 @@ public class Main {
     }
 
     // --------- The Reports Menu --------- (inside the ledger screen)
-    public static void reportsMenu () {
+    public static void reportsMenu() {
 
     }
+
+
 
 
 
@@ -227,19 +193,22 @@ public class Main {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] parts = line.split("\\|");  // Splits everything into each piece by the | line symbok
 
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
                 if (parts.length == 5) { // checks if the line has 5 different parts.
-                    LocalDate date = LocalDate.parse(parts[0]);
-                    LocalTime time = LocalTime.parse(parts[1]);
-                    String description = parts[2];
+                    LocalDate date = LocalDate.parse(parts[0].trim());
+                    LocalTime time = LocalTime.parse(parts[1].trim(), timeFormatter);
+                    String description = parts[2].trim();
                     String vendor = parts[3].trim();
                     double amount = Double.parseDouble(parts[4].trim());
 
                     transactions.add(new Transaction(date, time, description, vendor, amount));
                 }
             }
-        }   catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("Something went wrong reading the file...");
-        } return transactions;
+        }
+        return transactions;
     }
     // I'm thinking of moving this entire method^^ to a different class maybe names file manager or file reader, that way my main will look much cleaner.
 
@@ -248,5 +217,25 @@ public class Main {
 
 
 
-    // --------- Lastly polish up and clean code where it can be cleaned ---------
+    // Started making this method so that everything is a little cleaner up top and reduce repeated lines of code.
+    public static void saveTransaction(Transaction t) {
+        try {
+            FileWriter fileWriter = new FileWriter("transactions.csv", true);
+            BufferedWriter bw = new BufferedWriter(fileWriter);
+
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            String formattedTime = t.getTime().format(timeFormatter);
+
+            bw.write(String.format("%s|%s|%s|%s|%.2f\n",
+                    t.getDate(), formattedTime, t.getDescription(), t.getVendor(), t.getAmount()));
+
+            bw.close();
+        } catch (IOException e) {
+            System.out.println("Error saving transaction: ");
+        }
+    }
+
+
+        // --------- Lastly polish up and clean code where it can be cleaned ---------
+
 }

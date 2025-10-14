@@ -2,6 +2,7 @@ package com.pluralsight;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Transaction {
     // This class is the template for each transaction recorded
@@ -41,8 +42,10 @@ public class Transaction {
     // Should format how to display the transaction into the console.log
     @Override
     public String toString() {
-        //return date + " | " + time + " | " + description + " | " + vendor + " | " + amount;
-        return String.format("%s | %s | %s | %s | $%.2f", date, time, description, vendor, amount);
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formattedTime = time.format(timeFormatter);
+
+        return String.format("%s | %s | %s | %s | $%.2f", date, formattedTime, description, vendor, amount);
     }
 
 //    public String toEncodedString(){
