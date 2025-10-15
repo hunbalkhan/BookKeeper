@@ -5,8 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
-
+import java.util.Collections;
 
 
 public class Main {
@@ -73,7 +72,7 @@ public class Main {
         // I moved my line builder down below
         Transaction deposit = new Transaction(today, now, description, vendor, amount);
 
-        saveTransaction(deposit);
+        saveEachTransaction(deposit);
         System.out.println("Deposit Added: " + deposit);
     }
 
@@ -97,7 +96,7 @@ public class Main {
         // This builds the csv line so that it can be added to the csv file and read correctly as intended, hopefully this time its working.
         Transaction payment = new Transaction(today, now, description, vendor, -amount);
 
-        saveTransaction(payment);
+        saveEachTransaction(payment);
         System.out.println("Payment recorded: " + payment);
     }
 
@@ -173,6 +172,8 @@ public class Main {
 
     // --------- The Reports Menu --------- (inside the ledger screen)
     public static void reportsMenu() {
+
+        // This reads all transactions from csv, stores them in transactions
         ArrayList<Transaction> transactions = readTransactions();
 
         while (true) {
@@ -187,6 +188,8 @@ public class Main {
             String choice = ConsoleHelper.promptForString("Choose an option");
 
             switch (choice.trim()) {
+
+                // Here I call transactions in the brackets, it sends the list to each case
                 case "1":
                     monthToDate(transactions);
                     break;
@@ -202,6 +205,9 @@ public class Main {
                 case "5":
                     searchByVendor(transactions);
                     break;
+//                case "6":
+//                    customSearch(transactions);
+//                    break;
                 case "0":
                    return; // Goes back to Ledger Menu.
                 default:
@@ -217,7 +223,7 @@ public class Main {
         int currentMonth = LocalDate.now().getMonthValue(); // this converts the month into a number.
         int currentYear = LocalDate.now().getYear(); // gets year
 
-        //start a for loop to go through each trasaction that is inside the csv file
+        //start a for loop to go through each transaction that is inside the csv file
         for (Transaction t : transactions) {
             LocalDate date = t.getDate(); // get date of a transaction
 
@@ -276,6 +282,10 @@ public class Main {
         }
     }
 
+
+
+
+
     public static void searchByVendor(ArrayList<Transaction> transactions) {
         System.out.println("\n--- Search by Vendor ---");
 
@@ -301,7 +311,7 @@ public class Main {
 
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                String[] parts = line.split("\\|");  // Splits everything into each piece by the | line symbok
+                String[] parts = line.split("\\|");  // Splits everything into each piece by the | line symbol
 
                 DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
@@ -315,6 +325,20 @@ public class Main {
                     transactions.add(new Transaction(date, time, description, vendor, amount));
                 }
             }
+
+            bufferedReader.close();
+
+            // This sorts the csv from newest to oldest
+            transactions.sort((a, b) -> {
+                if (a.getDate().equals(b.getDate())) { // If both transactions happened on the same date
+                    return b.getTime().compareTo(a.getTime()); // then compare for the time, printing earliest first
+                }
+                else {
+                    return b.getDate().compareTo(a.getDate()); // Otherwise sort them by their date
+                }
+            });
+
+
         } catch (IOException e) {
             System.out.println("Something went wrong reading the file...");
         }
@@ -323,12 +347,8 @@ public class Main {
     // I'm thinking of moving this entire method^^ to a different class maybe names file manager or file reader, that way my main will look much cleaner.
 
 
-
-
-
-
     // Started making this method so that everything is a little cleaner up top and reduce repeated lines of code.
-    public static void saveTransaction(Transaction t) {
+    public static void saveEachTransaction(Transaction t) {
         try {
             FileWriter fileWriter = new FileWriter("transactions.csv", true);
             BufferedWriter bw = new BufferedWriter(fileWriter);
@@ -340,12 +360,12 @@ public class Main {
                     t.getDate(), formattedTime, t.getDescription(), t.getVendor(), t.getAmount()));
 
             bw.close();
+
         } catch (IOException e) {
             System.out.println("Error saving transaction: ");
         }
     }
 
-
-        // --------- Lastly polish up and clean code where it can be cleaned ---------
+      // --------- Lastly polish up and clean code where it can be cleaned ---------
 
 }
