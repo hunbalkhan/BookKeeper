@@ -16,10 +16,10 @@ This is my first capstone project for the Year Up United program. The program is
 
 ---
 
-## Screenshots
+## 💡 Functional Highlights
 
-### 1. Home Menu
-Shows the main menu with options to navigate through the program.
+### 1. Transaction Flow Overview
+Demonstrates the full journey — from adding a deposit or payment to seeing it appear instantly in the ledger and saved in transactions.csv.
 
 ![Home Menu Screenshot](screenshots/home_menu.png)
 
