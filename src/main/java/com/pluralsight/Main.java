@@ -18,15 +18,23 @@ public class Main {
     // --------- Home Menu (Main Loop) ---------
     public static void homeMenu() {
         while (true) {
-            System.out.println("\n--------- Welcome to BookKeeper ---------\n");
-            System.out.println("\n--- Home Menu ---");
-            System.out.println("D) Add Deposit");
-            System.out.println("P) Make Payment");
-            System.out.println("L) Ledger");
-            System.out.println("X) Exit");
-            System.out.print("\nChoose an option");
+            System.out.println("""
+                ╔══════════════════════════════╗
+                ║    Welcome to BookKeeper!    ║
+                ╚══════════════════════════════╝
+                """);
+                        System.out.println("""
+                ╔══════════════════════════════╗
+                ║          Home Menu           ║
+                ╠══════════════════════════════╣
+                ║ D) Add Deposit               ║
+                ║ P) Make Payment              ║
+                ║ L) Ledger                    ║
+                ║ X) Exit                      ║
+                ╚══════════════════════════════╝
+                """);
 
-            String choice = ConsoleHelper.promptForString("");
+            String choice = ConsoleHelper.promptForString("     -> Choose an option");
 
             switch (choice.toUpperCase().trim()) {
                 case "D":
@@ -40,21 +48,21 @@ public class Main {
                     break;
                 case "X":
                     System.out.println("""
-                            \n--------- Thank you for using BookKeeper! ---------
-                            
-
-                                              <- Goodbye! ->
-                            """);
+                    ╔═════════════════════════════════╗
+                    ║ Thank you for using BookKeeper! ║
+                    ║         <- Goodbye! ->          ║
+                    ╚═════════════════════════════════╝
+                    """);
                     return; // Exit program
                 default:
-                    System.out.println("Invalid option - Please try again.");
+                    System.out.println("Invalid option - Please try again.\n");
                     break;
             }
         }
     }
 
     public static void addDeposit() {
-        System.out.println("\n--- Add Deposit ---");
+        System.out.println("\n╠════════ Add Deposit ════════╣\n");
 
         String description = ConsoleHelper.promptForString("Description");
         String vendor = ConsoleHelper.promptForString("Vendor");
@@ -72,11 +80,11 @@ public class Main {
         Transaction deposit = new Transaction(today, now, description, vendor, amount);
 
         saveEachTransaction(deposit); // Save transaction to CSV
-        System.out.println("Deposit Added: " + deposit);
+        System.out.println("Deposit Added: " + deposit + "\n");
     }
 
     public static void makePayment() {
-        System.out.println("\n--- Make Payment ---");
+        System.out.println("\n╠════════ Make Payment ════════╣\n");
 
         String description = ConsoleHelper.promptForString("Description");
         String vendor = ConsoleHelper.promptForString("Vendor");
@@ -93,20 +101,24 @@ public class Main {
         Transaction payment = new Transaction(today, now, description, vendor, -amount);
 
         saveEachTransaction(payment); // Save payment to CSV
-        System.out.println("Payment recorded: " + payment);
+        System.out.println("Payment recorded: " + payment + "\n");
     }
 
     public static void ledgerMenu() {
         while (true) {
-            System.out.println("\n--- Ledger Menu ---");
-            System.out.println("A) All entries");
-            System.out.println("D) Deposits only");
-            System.out.println("P) Payments only");
-            System.out.println("R) Reports");
-            System.out.println("H) Home");
-            System.out.print("\nChoose an option");
+            System.out.println("""
+            \n╔══════════════════════════════╗
+            ║         Ledger Menu          ║
+            ╠══════════════════════════════╣
+            ║ A) All entries               ║
+            ║ D) Deposits only             ║
+            ║ P) Payments only             ║
+            ║ R) Reports                   ║
+            ║ H) Home                      ║
+            ╚══════════════════════════════╝
+            """);
 
-            String choice = ConsoleHelper.promptForString("");
+            String choice = ConsoleHelper.promptForString("     -> Choose an option");
             ArrayList<Transaction> transactions = readTransactions();
 
             switch (choice.toUpperCase().trim()) {
@@ -125,7 +137,7 @@ public class Main {
                 case "H":
                     return; // Return to Home Menu
                 default:
-                    System.out.println("Invalid option - Please try again.");
+                    System.out.println("Invalid option - Please try again.\n");
                     break;
             }
         }
@@ -134,14 +146,14 @@ public class Main {
 
     // --------- Display Functions ---------
     public static void displayTransactions(ArrayList<Transaction> transactions) {
-        System.out.println("\n--- All Transactions ---\n");
+        System.out.println("\n╠════════ All Transactions ════════╣\n");
         for (Transaction t : transactions) {
             System.out.println(t);
         }
     }
 
     public static void depositsOnly(ArrayList<Transaction> transactions) {
-        System.out.println("\n--- All Deposits ---");
+        System.out.println("\n╠════════ All Deposits ════════╣\n");
         for (Transaction t : transactions) {
             if (t.getAmount() > 0) {
                 System.out.println(t);
@@ -150,7 +162,7 @@ public class Main {
     }
 
     public static void paymentsOnly(ArrayList<Transaction> transactions) {
-        System.out.println("\n--- All Payments ---");
+        System.out.println("\n╠════════ All Payments ════════╣\n");
         for (Transaction t : transactions) {
             if (t.getAmount() < 0) {
                 System.out.println(t);
@@ -163,15 +175,21 @@ public class Main {
         ArrayList<Transaction> transactions = readTransactions();
 
         while (true) {
-            System.out.println("\n--- Reports Menu ---");
-            System.out.println("1) Month-to-Date");
-            System.out.println("2) Previous Month");
-            System.out.println("3) Year-to-Date");
-            System.out.println("4) Previous Year");
-            System.out.println("5) Search by Vendor");
-            System.out.println("0) Back");
 
-            String choice = ConsoleHelper.promptForString("Choose an option");
+            System.out.println("""
+            \n╔══════════════════════════════╗
+            ║         Reports Menu         ║
+            ╠══════════════════════════════╣
+            ║ 1) Month-to-Date             ║
+            ║ 2) Previous Month            ║
+            ║ 3) Year-to-Date              ║
+            ║ 4) Previous Year             ║
+            ║ 5) Search by Vendor          ║
+            ║ 0) Back                      ║
+            ╚══════════════════════════════╝
+            """);
+
+            String choice = ConsoleHelper.promptForString("     -> Choose an option");
 
             switch (choice.trim()) {
                 case "1":
@@ -189,6 +207,8 @@ public class Main {
                 case "5":
                     searchByVendor(transactions);
                     break;
+//                case "6":
+//                    customSearch(transactions);
                 case "0":
                     return; // Return to Ledger Menu
                 default:
@@ -201,7 +221,7 @@ public class Main {
 
     // --------- Report Functions ---------
     public static void monthToDate(ArrayList<Transaction> transactions) {
-        System.out.println("\n--- Month-to-Date Report ---");
+        System.out.println("\n╠════════ Month-to-Date Report ════════╣\n");
         int currentMonth = LocalDate.now().getMonthValue();
         int currentYear = LocalDate.now().getYear();
 
@@ -214,7 +234,7 @@ public class Main {
     }
 
     public static void previousMonth(ArrayList<Transaction> transactions) {
-        System.out.println("\n--- Previous Month Report ---");
+        System.out.println("\n╠════════ Previous Month Report ════════╣\n");
         int prevMonth = LocalDate.now().getMonthValue() - 1;
         int currentYear = LocalDate.now().getYear();
 
@@ -232,7 +252,7 @@ public class Main {
     }
 
     public static void yearToDate(ArrayList<Transaction> transactions) {
-        System.out.println("\n--- Year-to-Date Report ---");
+        System.out.println("\n╠════════ Year-to-Date Report ════════╣\n");
         int currentYear = LocalDate.now().getYear();
 
         for (Transaction t : transactions) {
@@ -243,7 +263,7 @@ public class Main {
     }
 
     public static void previousYear(ArrayList<Transaction> transactions) {
-        System.out.println("\n--- Previous Year Report ---");
+        System.out.println("\n╠════════ Previous Year Report ════════╣\n");
         int prevYear = LocalDate.now().getYear() - 1;
 
         for (Transaction t : transactions) {
@@ -254,11 +274,11 @@ public class Main {
     }
 
     public static void searchByVendor(ArrayList<Transaction> transactions) {
-        System.out.println("\n--- Search by Vendor ---");
-        String vendorSearch = ConsoleHelper.promptForString("Enter Vendor name to search");
+        System.out.println("\n╠════════ Search by Vendor ════════╣\n");
+        String vendorSearch = ConsoleHelper.promptForString("Enter Vendor name to search").toLowerCase();
 
         for (Transaction t : transactions) {
-            if (t.getVendor().equalsIgnoreCase(vendorSearch)) {
+            if (t.getVendor().toLowerCase().contains(vendorSearch)) {
                 System.out.println(t);
             }
         }

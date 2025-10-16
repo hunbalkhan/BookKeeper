@@ -40,7 +40,7 @@ public class Transaction {
     }
 
 
-    // calculating the number of spaces myself may allow me to centre the text manually
+    // calculating manually to center a text for the user
     private String centerText(String text, int width) {
         int spaces = width - text.length();
         int left = spaces / 2;
@@ -58,8 +58,6 @@ public class Transaction {
         return result;
     }
 
-
-
     // Should format how to display the transaction into the console.log
     @Override
     public String toString() {
@@ -68,13 +66,12 @@ public class Transaction {
 
         String formattedAmount = String.format("$%.2f", amount);
 
-        return centerText(date.toString(), 12) + "|" +
-                centerText(formattedTime, 10) + "|" +
-                centerText(description, 24) + "|" +
-                centerText(vendor, 20) + "|" +
-                centerText(formattedAmount, 10) + "|";
+        return centerText(date.toString(), 14) + "|" +
+                centerText(formattedTime, 12) + "|" +
+                centerText(description, 28) + "|" +
+                centerText(vendor, 25) + "|" +
+                centerText(formattedAmount, 12) + "|";
     }
-
 
     /*
     @Override
@@ -85,7 +82,5 @@ public class Transaction {
         return String.format("%-12s | %-10s | %-23s | %-20s | $%-10.2f", date, formattedTime, description, vendor, amount);
     }
     */
-
-
 
 }
