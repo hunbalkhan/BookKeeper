@@ -39,18 +39,52 @@ public class Transaction {
         return amount;
     }
 
+
+    // calculating the number of spaces myself may allow me to centre the text manually
+    private String centerText(String text, int width) {
+        int spaces = width - text.length();
+        int left = spaces / 2;
+        int right = spaces - left;
+        String result = "";
+
+        for (int i = 0; i < left; i++) {
+            result += " ";
+        }
+        result += text;
+
+        for (int i = 0; i < right; i++) {
+            result += " ";
+        }
+        return result;
+    }
+
+
+
     // Should format how to display the transaction into the console.log
     @Override
     public String toString() {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String formattedTime = time.format(timeFormatter);
 
-        return String.format("%s | %s | %s | %s | $%.2f", date, formattedTime, description, vendor, amount);
+        String formattedAmount = String.format("$%.2f", amount);
+
+        return centerText(date.toString(), 12) + "|" +
+                centerText(formattedTime, 10) + "|" +
+                centerText(description, 24) + "|" +
+                centerText(vendor, 20) + "|" +
+                centerText(formattedAmount, 10) + "|";
     }
 
-//    public String toEncodedString(){
-//
-//    }
+
+    /*
+    @Override
+    public String toString() {
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formattedTime = time.format(timeFormatter);
+
+        return String.format("%-12s | %-10s | %-23s | %-20s | $%-10.2f", date, formattedTime, description, vendor, amount);
+    }
+    */
 
 
 

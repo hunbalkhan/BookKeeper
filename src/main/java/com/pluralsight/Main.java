@@ -5,53 +5,53 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
+
 
 
 public class Main {
 
     public static void main(String[] args) {
-        homeMenu(); // Our program starts here immediately calling the home menu first.
+        homeMenu(); // Start the program by showing the Home Menu
     }
 
 
-    // --------- The Home Menu (Main Loop) ---------
+    // --------- Home Menu (Main Loop) ---------
     public static void homeMenu() {
         while (true) {
             System.out.println("\n--------- Welcome to BookKeeper ---------\n");
-            System.out.println("\n--- The Home Menu ---");
+            System.out.println("\n--- Home Menu ---");
             System.out.println("D) Add Deposit");
             System.out.println("P) Make Payment");
             System.out.println("L) Ledger");
             System.out.println("X) Exit");
-            System.out.print("Choose an option");
+            System.out.print("\nChoose an option");
 
             String choice = ConsoleHelper.promptForString("");
 
             switch (choice.toUpperCase().trim()) {
                 case "D":
-                    addDeposit();
+                    addDeposit(); // Add a deposit transaction
                     break;
                 case "P":
-                    makePayment();
+                    makePayment(); // Add a payment transaction
                     break;
                 case "L":
-                    ledgerMenu();
+                    ledgerMenu(); // Go to Ledger Menu
                     break;
                 case "X":
                     System.out.println("""
                             \n--------- Thank you for using BookKeeper! ---------
                             
+
                                               <- Goodbye! ->
                             """);
-                    return;
+                    return; // Exit program
                 default:
                     System.out.println("Invalid option - Please try again.");
                     break;
             }
         }
     }
-
 
     public static void addDeposit() {
         System.out.println("\n--- Add Deposit ---");
@@ -65,19 +65,16 @@ public class Main {
             return;
         }
 
-        // Records the current date and time;
+        // Record current date and time
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
 
-        // I moved my line builder down below
         Transaction deposit = new Transaction(today, now, description, vendor, amount);
 
-        saveEachTransaction(deposit);
+        saveEachTransaction(deposit); // Save transaction to CSV
         System.out.println("Deposit Added: " + deposit);
     }
 
-
-    // --------- Make Payment --------- I realised I utilized almost the exact same as the Add Deposit and I am thinking further down the line I might simplify this step and add a class to call for repeated steps.
     public static void makePayment() {
         System.out.println("\n--- Make Payment ---");
 
@@ -86,51 +83,47 @@ public class Main {
         double amount = ConsoleHelper.promptForDouble("Amount (numbers only)");
 
         if (amount <= 0) {
-            System.out.println("\nAmount must be greater than $0.00. Deposit cancelled.");
+            System.out.println("\nAmount must be greater than $0.00. Payment cancelled.");
             return;
         }
 
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
 
-        // This builds the csv line so that it can be added to the csv file and read correctly as intended, hopefully this time its working.
         Transaction payment = new Transaction(today, now, description, vendor, -amount);
 
-        saveEachTransaction(payment);
+        saveEachTransaction(payment); // Save payment to CSV
         System.out.println("Payment recorded: " + payment);
     }
 
-
-    // --------- The Ledger Menu ---------
     public static void ledgerMenu() {
-
         while (true) {
-            System.out.println("\n--- The Ledger Menu ---");
+            System.out.println("\n--- Ledger Menu ---");
             System.out.println("A) All entries");
             System.out.println("D) Deposits only");
             System.out.println("P) Payments only");
             System.out.println("R) Reports");
             System.out.println("H) Home");
-            System.out.print("Choose an option");
+            System.out.print("\nChoose an option");
 
             String choice = ConsoleHelper.promptForString("");
             ArrayList<Transaction> transactions = readTransactions();
 
             switch (choice.toUpperCase().trim()) {
                 case "A":
-                    displayTransactions(transactions);
+                    displayTransactions(transactions); // Show all transactions
                     break;
                 case "D":
-                    depositsOnly(transactions);
+                    depositsOnly(transactions); // Show only deposits
                     break;
                 case "P":
-                    paymentsOnly(transactions);
+                    paymentsOnly(transactions); // Show only payments
                     break;
                 case "R":
-                    reportsMenu();
+                    reportsMenu(); // Go to reports menu
                     break;
                 case "H":
-                    return; // makes it go back once to home.
+                    return; // Return to Home Menu
                 default:
                     System.out.println("Invalid option - Please try again.");
                     break;
@@ -139,12 +132,11 @@ public class Main {
     }
 
 
+    // --------- Display Functions ---------
     public static void displayTransactions(ArrayList<Transaction> transactions) {
         System.out.println("\n--- All Transactions ---\n");
         for (Transaction t : transactions) {
             System.out.println(t);
-//            System.out.printf("%s | %s | %s | %s | $%.2f\n",
-//                    t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
         }
     }
 
@@ -153,8 +145,6 @@ public class Main {
         for (Transaction t : transactions) {
             if (t.getAmount() > 0) {
                 System.out.println(t);
-//                System.out.printf("%s | %s | %s | %s | $%.2f\n",
-//                        t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
             }
         }
     }
@@ -164,16 +154,12 @@ public class Main {
         for (Transaction t : transactions) {
             if (t.getAmount() < 0) {
                 System.out.println(t);
-//                System.out.printf("%s | %s | %s | %s | $%.2f%n",
-//                        t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
             }
         }
     }
 
-    // --------- The Reports Menu --------- (inside the ledger screen)
+    // --------- Reports Menu ---------
     public static void reportsMenu() {
-
-        // This reads all transactions from csv, stores them in transactions
         ArrayList<Transaction> transactions = readTransactions();
 
         while (true) {
@@ -188,8 +174,6 @@ public class Main {
             String choice = ConsoleHelper.promptForString("Choose an option");
 
             switch (choice.trim()) {
-
-                // Here I call transactions in the brackets, it sends the list to each case
                 case "1":
                     monthToDate(transactions);
                     break;
@@ -205,30 +189,25 @@ public class Main {
                 case "5":
                     searchByVendor(transactions);
                     break;
-//                case "6":
-//                    customSearch(transactions);
-//                    break;
                 case "0":
-                   return; // Goes back to Ledger Menu.
+                    return; // Return to Ledger Menu
                 default:
-                    System.out.println("Invalid choice! Please Please try again.");
+                    System.out.println("Invalid choice! Please try again.");
                     break;
             }
         }
     }
 
+
+    // --------- Report Functions ---------
     public static void monthToDate(ArrayList<Transaction> transactions) {
         System.out.println("\n--- Month-to-Date Report ---");
+        int currentMonth = LocalDate.now().getMonthValue();
+        int currentYear = LocalDate.now().getYear();
 
-        int currentMonth = LocalDate.now().getMonthValue(); // this converts the month into a number.
-        int currentYear = LocalDate.now().getYear(); // gets year
-
-        //start a for loop to go through each transaction that is inside the csv file
         for (Transaction t : transactions) {
-            LocalDate date = t.getDate(); // get date of a transaction
-
-            // If the transaction happened in the current month and year then do the following
-            if (date.getMonthValue() == currentMonth  &&  date.getYear() == currentYear) {
+            LocalDate date = t.getDate();
+            if (date.getMonthValue() == currentMonth && date.getYear() == currentYear) {
                 System.out.println(t);
             }
         }
@@ -236,20 +215,16 @@ public class Main {
 
     public static void previousMonth(ArrayList<Transaction> transactions) {
         System.out.println("\n--- Previous Month Report ---");
-
-        int prevMonth = LocalDate.now().getMonthValue() - 1; // gets the prev month
+        int prevMonth = LocalDate.now().getMonthValue() - 1;
         int currentYear = LocalDate.now().getYear();
 
-        // I noticed after a January transaction, this would be a bug and wouldn't print correctly.
-        if (prevMonth == 0) { // 1 - January we get 0
-            prevMonth = 12; // if prev month is 0 then make prevMonth December
+        if (prevMonth == 0) { // Handle January case
+            prevMonth = 12;
             currentYear -= 1;
         }
 
         for (Transaction t : transactions) {
-            LocalDate date = t.getDate(); // get date of a transaction
-
-            // If the transaction happened in the prev month and current year then do the following
+            LocalDate date = t.getDate();
             if (date.getMonthValue() == prevMonth && date.getYear() == currentYear) {
                 System.out.println(t);
             }
@@ -258,13 +233,10 @@ public class Main {
 
     public static void yearToDate(ArrayList<Transaction> transactions) {
         System.out.println("\n--- Year-to-Date Report ---");
-
         int currentYear = LocalDate.now().getYear();
 
         for (Transaction t : transactions) {
-            LocalDate date = t.getDate();
-
-            if (date.getYear() == currentYear) {
+            if (t.getDate().getYear() == currentYear) {
                 System.out.println(t);
             }
         }
@@ -272,27 +244,21 @@ public class Main {
 
     public static void previousYear(ArrayList<Transaction> transactions) {
         System.out.println("\n--- Previous Year Report ---");
-
-        int prevYear = LocalDate.now().getYear() -1; // gets last year
+        int prevYear = LocalDate.now().getYear() - 1;
 
         for (Transaction t : transactions) {
-            if (t.getDate().getYear() == prevYear) { // print only if transactions match prev year...
+            if (t.getDate().getYear() == prevYear) {
                 System.out.println(t);
             }
         }
     }
-
-
-
-
 
     public static void searchByVendor(ArrayList<Transaction> transactions) {
         System.out.println("\n--- Search by Vendor ---");
-
         String vendorSearch = ConsoleHelper.promptForString("Enter Vendor name to search");
 
         for (Transaction t : transactions) {
-            if (t.getVendor().equalsIgnoreCase(vendorSearch)) { // loop through all transactions, if it matches regardless of casing then print all matched ones.
+            if (t.getVendor().equalsIgnoreCase(vendorSearch)) {
                 System.out.println(t);
             }
         }
@@ -300,22 +266,20 @@ public class Main {
 
 
 
-
-    // First to make it here in Main then to move it to a different class to keep this Main.java clean
+    // --------- Read Transactions from CSV ---------
     public static ArrayList<Transaction> readTransactions() {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
         try {
-            FileReader fileReader = new FileReader("transactions.csv");      // This opens the csv file
-            BufferedReader bufferedReader = new BufferedReader(fileReader);  // This reads each line in a faster way
+            FileReader fileReader = new FileReader("transactions.csv");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                String[] parts = line.split("\\|");  // Splits everything into each piece by the | line symbol
-
+                String[] parts = line.split("\\|");
                 DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-                if (parts.length == 5) { // checks if the line has 5 different parts.
+                if (parts.length == 5) {
                     LocalDate date = LocalDate.parse(parts[0].trim());
                     LocalTime time = LocalTime.parse(parts[1].trim(), timeFormatter);
                     String description = parts[2].trim();
@@ -328,26 +292,23 @@ public class Main {
 
             bufferedReader.close();
 
-            // This sorts the csv from newest to oldest
+            // Sort transactions: newest first by date and time
             transactions.sort((a, b) -> {
-                if (a.getDate().equals(b.getDate())) { // If both transactions happened on the same date
-                    return b.getTime().compareTo(a.getTime()); // then compare for the time, printing earliest first
-                }
-                else {
-                    return b.getDate().compareTo(a.getDate()); // Otherwise sort them by their date
+                if (a.getDate().equals(b.getDate())) {
+                    return b.getTime().compareTo(a.getTime()); // Same date, sort by time
+                } else {
+                    return b.getDate().compareTo(a.getDate()); // Otherwise sort by date
                 }
             });
-
 
         } catch (IOException e) {
             System.out.println("Something went wrong reading the file...");
         }
+
         return transactions;
     }
-    // I'm thinking of moving this entire method^^ to a different class maybe names file manager or file reader, that way my main will look much cleaner.
 
-
-    // Started making this method so that everything is a little cleaner up top and reduce repeated lines of code.
+    // --------- Save Transaction to CSV ---------
     public static void saveEachTransaction(Transaction t) {
         try {
             FileWriter fileWriter = new FileWriter("transactions.csv", true);
@@ -362,10 +323,7 @@ public class Main {
             bw.close();
 
         } catch (IOException e) {
-            System.out.println("Error saving transaction: ");
+            System.out.println("Error saving transaction.");
         }
     }
-
-      // --------- Lastly polish up and clean code where it can be cleaned ---------
-
 }
