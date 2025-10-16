@@ -39,26 +39,27 @@ Filter transactions dynamically by selecting from:
 - Year-to-Date  
 - Previous Year 
 
-![Make Payment Screenshot](screenshots/make_payment.png)
+<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/cb4ff81b-3b05-492e-92ac-4ddc4c22f9ed" />
 
 ---
 
 ### 5. **Vendor Search with Partial Matches**
 Searches for transactions by vendor, supporting partial text (e.g., typing “ama” returns *Amazon* and *Amanda’s Shop*).
-![Ledger Menu Screenshot](screenshots/ledger_menu.png)
+
+<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/b08528d5-ce30-4dec-ae79-665287cd66e5" />
+
 
 ---
 
-### 5. Reports Menu
-Example report output (e.g., Month-to-Date).
+### 5. **Sorted Transactions**
+Transactions are automatically sorted by newest date and time (descending order), so recent activity always appears first.
 
-![Reports Screenshot](screenshots/reports_menu.png)
+
 
 ---
 
-### 6. Search by Vendor
-Shows filtering transactions by vendor name.
-
+### 6. **Data Persistence**
+All data remains stored even after the program is closed, thanks to the `saveEachTransaction()` method writing to `transactions.csv`.
 ![Vendor Search Screenshot](screenshots/vendor_search.png)
 
 ---
