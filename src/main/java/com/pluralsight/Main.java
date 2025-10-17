@@ -167,6 +167,7 @@ public class Main {
                 System.out.println(t);
             }
         }
+        System.out.println("\n╠══════════════════════════════════════════════════════════════════════════════════════════════╣\n");
     }
 
     public static void paymentsOnly(ArrayList<Transaction> transactions) {
