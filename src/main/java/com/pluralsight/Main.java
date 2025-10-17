@@ -271,17 +271,27 @@ public class Main {
                 System.out.println(t);
             }
         }
+        System.out.println("\n╠══════════════════════════════════╣");
     }
 
     public static void searchByVendor(ArrayList<Transaction> transactions) {
         System.out.println("\n╠════════ Search by Vendor ════════╣\n");
         String vendorSearch = ConsoleHelper.promptForString("Enter Vendor name to search").toLowerCase();
 
+        boolean found = false;
+
         for (Transaction t : transactions) {
             if (t.getVendor().toLowerCase().contains(vendorSearch)) {
                 System.out.println(t);
+                found = true;
             }
         }
+
+        if (!found) {
+            System.out.println("\nNo transaction found for \"" + vendorSearch + "\"");
+        }
+
+        System.out.println("\n╠══════════════════════════════════╣");
     }
 
 
