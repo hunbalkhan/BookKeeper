@@ -42,10 +42,12 @@ public class Transaction {
 
     // calculating manually to center a text for the user
     private String centerText(String text, int width) {
+
         int spaces = width - text.length();
         int left = spaces / 2;
         int right = spaces - left;
-        String result = "";
+
+        String result = ""; // empty box
 
         for (int i = 0; i < left; i++) {
             result += " ";
@@ -73,6 +75,7 @@ public class Transaction {
                 centerText(formattedAmount, 12) + "|";
     }
 
+    // Old format
     /*
     @Override
     public String toString() {

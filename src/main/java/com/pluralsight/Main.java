@@ -19,6 +19,7 @@ public class Main {
     public static void homeMenu() {
         while (true) {
             System.out.println("""
+                
                 ╔══════════════════════════════╗
                 ║    Welcome to BookKeeper!    ║
                 ╚══════════════════════════════╝
@@ -148,7 +149,7 @@ public class Main {
     }
 
 
-    // --------- Display Functions ---------
+    // --------- Ledger Functions ---------
     public static void displayTransactions(ArrayList<Transaction> transactions) {
         System.out.println("\n╠══════════════════════════════════════ All Transactions ══════════════════════════════════════╣\n");
 
@@ -178,6 +179,7 @@ public class Main {
         }
         System.out.println("\n╠══════════════════════════════════════════════════════════════════════════════════════════════╣\n");
     }
+
 
     // --------- Reports Menu ---------
     public static void reportsMenu() {
