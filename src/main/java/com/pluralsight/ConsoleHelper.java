@@ -12,7 +12,7 @@ public class ConsoleHelper {
             System.out.print(prompt + ": ");
             input = scanner.nextLine().trim();
             if (input.isEmpty()) {
-                System.out.println("Input cannot be empty. Please try again.");
+                System.out.println("❌ Input cannot be empty. Please try again.");
             }
         }
         return input;
@@ -47,7 +47,7 @@ public class ConsoleHelper {
                 result = Double.parseDouble(input); // Try converting to double
                 valid = true;                        // Success!
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid number."); // Error message
+                System.out.println("❌ Invalid input. Please enter a valid number."); // Error message
             }
         }
 
