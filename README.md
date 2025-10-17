@@ -1,13 +1,11 @@
 # BookKeeper - Capstone Project 1
 
-**Year Up United – Java Capstone Project 1**  
-This is my first capstone project for the Year Up United program. The program is written in **Java** and simulates a simple bookkeeping application. Users can add deposits, make payments, view ledgers, and generate reports.
 
 
----
-
+**Year Up United – Java Capstone Project 1**
 ## Project Overview
-BookKeeper is a simple yet powerful Java-based bookkeeping application designed to help users easily manage and track their personal or small business transactions. The goal of this project is to demonstrate core Java skills such as file handling, object-oriented programming, and error handling, while also providing a user-friendly interface.
+
+This is my submission of our first capstone project for Year Up United. BookKeeper is a simple yet powerful Java-based bookkeeping application designed to help users easily manage and track their personal or small business transactions. The goal of this project is to demonstrate core Java skills such as file handling, object-oriented programming, and error handling, while also providing a user-friendly interface.
 
 
 ---
@@ -22,22 +20,21 @@ BookKeeper is a simple yet powerful Java-based bookkeeping application designed 
 - **Persistent Storage:** Transactions are saved in a CSV file for long-term storage.  
 
 ---
-
 ## 💡 Functional Highlights
 
-### 1. **Transaction Flow Overview**
-Demonstrates the full journey — from adding a deposit or payment to seeing it appear instantly in the ledger and saved in transactions.csv. as well as automatic time recordings and date recordings.
-
-<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/4d365edd-2b43-4c34-b4ae-415796cce13f" />
-
----
-
-## How to Use
+### 1. **How to Use**
 1. Launch the application.
 2. From the home menu, choose to add a deposit, make a payment, view the ledger, or generate reports.
 3. Transactions are automatically recorded with the current date and time.
 4. Use the "Search by Vendor" feature to quickly filter transactions.
 5. Exit the program when finished; all data is saved in `transactions.csv`.
+
+---
+
+### 2. **Transaction Flow Overview**
+Demonstrates the full journey — from adding a deposit or payment to seeing it appear instantly in the ledger and saved in transactions.csv. as well as automatic time recordings and date recordings.
+
+<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/4d365edd-2b43-4c34-b4ae-415796cce13f" />
 
 ---
 
