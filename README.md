@@ -16,46 +16,50 @@ This is my first capstone project for the Year Up United program. The program is
 
 ---
 
-## Screenshots
+## 💡 Functional Highlights
 
-### 1. Home Menu
-Shows the main menu with options to navigate through the program.
+### 1. **Transaction Flow Overview**
+Demonstrates the full journey — from adding a deposit or payment to seeing it appear instantly in the ledger and saved in transactions.csv. as well as automatic time recordings and date recordings.
 
-![Home Menu Screenshot](screenshots/home_menu.png)
-
----
-
-### 2. Add Deposit
-Demonstrates adding a deposit and confirming the transaction.
-
-![Add Deposit Screenshot](screenshots/add_deposit.png)
+<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/4d365edd-2b43-4c34-b4ae-415796cce13f" />
 
 ---
 
-### 3. Make Payment
-Shows the flow for recording a payment.
+### 2. **Error Handling and Validation**
+Handles invalid input gracefully (e.g. Entering empty texts, entering text instead of numbers etc).
 
-![Make Payment Screenshot](screenshots/make_payment.png)
-
----
-
-### 4. Ledger Menu
-Displays the ledger menu and transaction options.
-
-![Ledger Menu Screenshot](screenshots/ledger_menu.png)
+<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/9d60fe89-702b-44c3-9e9c-972ea36b28cb" />
 
 ---
 
-### 5. Reports Menu
-Example report output (e.g., Month-to-Date).
+### 4. **Dynamic Reports**
+Filter transactions dynamically by selecting from:
+- Month-to-Date  
+- Previous Month  
+- Year-to-Date  
+- Previous Year 
 
-![Reports Screenshot](screenshots/reports_menu.png)
+<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/cb4ff81b-3b05-492e-92ac-4ddc4c22f9ed" />
 
 ---
 
-### 6. Search by Vendor
-Shows filtering transactions by vendor name.
+### 5. **Vendor Search with Partial Matches**
+Searches for transactions by vendor, supporting partial text (e.g., typing “ama” returns *Amazon* and *Amanda’s Shop*).
 
+<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/b08528d5-ce30-4dec-ae79-665287cd66e5" />
+
+
+---
+
+### 5. **Sorted Transactions**
+Transactions are automatically sorted by newest date and time (descending order), so recent activity always appears first.
+
+
+
+---
+
+### 6. **Data Persistence**
+All data remains stored even after the program is closed, thanks to the `saveEachTransaction()` method writing to `transactions.csv`.
 ![Vendor Search Screenshot](screenshots/vendor_search.png)
 
 ---
