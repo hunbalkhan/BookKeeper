@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="926bd4a0-9574-462f-9d0e-f52576fb1011" name="Changes" comment="updated displays for user interface">
+    <list default="true" id="926bd4a0-9574-462f-9d0e-f52576fb1011" name="Changes" comment="changed minor comments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pluralsight/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pluralsight/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pluralsight/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pluralsight/Transaction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/transactions.csv" beforeDir="false" afterPath="$PROJECT_DIR$/transactions.csv" afterDir="false" />
     </list>
@@ -120,7 +118,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760664438572</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="changed minor comments">
+      <option name="closed" value="true" />
+      <created>1760674862867</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1760674862867</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -129,6 +135,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Fixed some user input bugs with prompting amount with strings wen numbers are expected. Also made display menu's more appealing" />
     <MESSAGE value="updated displays for user interface" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated displays for user interface" />
+    <MESSAGE value="changed minor comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed minor comments" />
   </component>
 </project>

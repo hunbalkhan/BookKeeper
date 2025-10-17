@@ -82,7 +82,7 @@ public class Transaction {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String formattedTime = time.format(timeFormatter);
 
-        return String.format("%-12s | %-10s | %-23s | %-20s | $%-10.2f", date, formattedTime, description, vendor, amount);
+        return String.format("%-12s | %-10s | %-23s | %20s | $%10.2f", date, formattedTime, description, vendor, amount);
     }
     */
 
